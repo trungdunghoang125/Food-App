@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".view.fragment.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_random_meal"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
                 android:layout_margin="16dp"
                 app:cardCornerRadius="10dp"
                 app:cardUseCompatPadding="true"
@@ -72,7 +72,8 @@
                     android:id="@+id/img_random_meal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/accent" />
+                    android:background="@color/accent"
+                    android:scaleType="centerCrop" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -114,9 +115,9 @@
                 android:id="@+id/cv_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_categories">
 
                 <androidx.recyclerview.widget.RecyclerView
