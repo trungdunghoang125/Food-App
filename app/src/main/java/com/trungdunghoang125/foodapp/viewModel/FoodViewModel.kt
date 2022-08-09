@@ -11,29 +11,26 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val TAG = "tranmyle"
+class FoodViewModel : ViewModel() {
+    val foodDetailLiveData = MutableLiveData<Food>()
 
-class HomeFragmentViewModel : ViewModel() {
-    private var randomFoodLiveData = MutableLiveData<Food>()
-
-    fun getRandomFood() {
-        RetrofitInstance.api.getRandomFood().enqueue(object : Callback<FoodList> {
+    fun getFoodDetail(i: String) {
+        RetrofitInstance.api.getFoodDetail(i).enqueue(object : Callback<FoodList> {
             override fun onResponse(call: Call<FoodList>, response: Response<FoodList>) {
                 if (response.body() != null) {
-                    val randomFood: Food = response.body()!!.meals[0]
-                    Log.d(TAG, "Name of food is ${randomFood.strMeal}")
-                    randomFoodLiveData.value = randomFood
-                }
-                else return
+                    val food: Food = response.body()!!.meals.get(0)
+                    foodDetailLiveData.value = food
+                } else return
             }
 
             override fun onFailure(call: Call<FoodList>, t: Throwable) {
-                Log.d(TAG, "The error message is ${t.message}")
+                Log.d("FoodViewModel", t.message.toString())
             }
+
         })
     }
 
-    fun observerFoodLiveData(): LiveData<Food> {
-        return randomFoodLiveData
+    fun observerFoodDetailLiveData(): LiveData<Food> {
+        return foodDetailLiveData
     }
 }

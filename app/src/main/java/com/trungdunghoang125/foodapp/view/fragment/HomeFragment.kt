@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.trungdunghoang125.foodapp.databinding.FragmentHomeBinding
+import com.trungdunghoang125.foodapp.retrofit.Food
 import com.trungdunghoang125.foodapp.view.activity.FoodActivity
 import com.trungdunghoang125.foodapp.viewModel.HomeFragmentViewModel
 import retrofit2.Response
@@ -17,6 +18,13 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeFragmentViewModel
+    lateinit var food: Food
+
+    companion object {
+        const val FOOD_ID = "com.trungdunghoang125.foodapp.foodID"
+        const val FOOD_NAME = "com.trungdunghoang125.foodapp.foodName"
+        const val FOOD_THUMB = "com.trungdunghoang125.foodapp.foodThumb"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,11 +42,17 @@ class HomeFragment : Fragment() {
             Glide.with(this)
                 .load(newValue!!.strMealThumb)
                 .into(binding.imgRandomMeal)
+
+            // set value of newValue (food object) to food (public object)
+            this.food = newValue
         })
 
         // set onClickListener for random img
         binding.imgRandomMeal.setOnClickListener {
             val intent = Intent(this.context, FoodActivity::class.java)
+            intent.putExtra(FOOD_ID, food.idMeal)
+            intent.putExtra(FOOD_NAME, food.strMeal)
+            intent.putExtra(FOOD_THUMB, food.strMealThumb)
             startActivity(intent)
         }
 
